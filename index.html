@@ -485,7 +485,12 @@
     la noche antes o en el coche: la isla cobra otra dimensión cuando sabéis lo que pisáis.</p>
   <div class="nowbox">🔊 <b>Audioguía:</b> cada bloque de aquí abajo tiene un botón <b>«Escuchar»</b>. Tócalo y el
     móvil te lo narra en voz alta (perfecto para oírlo en el coche mientras conducís hacia el sitio). Vuelve a tocarlo
-    para parar. <i>Funciona en el navegador del móvil sin instalar nada; sube el volumen.</i></div>
+    para parar. <i>Funciona en el navegador del móvil sin instalar nada; sube el volumen.</i>
+    <div id="voicepick" style="margin-top:10px"></div>
+    <div style="font-size:.8rem;color:#5d6f74;margin-top:8px">💡 ¿Suena robótica? Elige arriba una voz marcada
+      <b>(natural)</b>. En <b>iPhone</b> puedes descargar voces premium en Ajustes → Accesibilidad → Contenido
+      hablado → Voces → Español (p. ej. «Mónica»). En <b>Android</b>, Chrome usa las voces de Google, más naturales.</div>
+  </div>
 
   <div class="intro-hist">
     <p class="dropcap">Madeira no existía para el mundo hasta hace seis siglos — pero después medio mundo pasó por
@@ -914,14 +919,64 @@
 (function(){
   var synth = window.speechSynthesis;
   if(!synth){ return; } // navegador sin soporte: no añadimos botones
-  var current = null; // botón que está sonando
+  var current = null;        // botón que está sonando
+  var selectedVoice = null;  // voz elegida por el usuario o auto
 
-  function pickVoice(){
-    var vs = synth.getVoices() || [];
-    return vs.find(function(v){return /es[-_]ES/i.test(v.lang);})
-        || vs.find(function(v){return /^es/i.test(v.lang);})
-        || vs.find(function(v){return /pt[-_]PT/i.test(v.lang);})
-        || null;
+  // Nombres de voces femeninas naturales conocidas (es/pt), por prioridad
+  var FEMALE = ['elvira','mónica','monica','sabina','helena','laura','paulina','marisol','google español','luciana','catarina','joana','fernanda','female','mujer'];
+  var NATURAL = ['natural','neural','online','enhanced','premium','google'];
+
+  function score(v){
+    var n=(v.name||'').toLowerCase(), s=0;
+    if(/es[-_]ES/i.test(v.lang)) s+=40; else if(/^es/i.test(v.lang)) s+=25; else if(/pt[-_]PT/i.test(v.lang)) s+=10; else return -1;
+    NATURAL.forEach(function(k){ if(n.indexOf(k)>=0) s+=15; });
+    FEMALE.forEach(function(k,i){ if(n.indexOf(k)>=0) s+=20-(i*0.3); });
+    if(/online/i.test(n)) s+=8; // las "Online (Natural)" de Edge suenan muy bien
+    return s;
+  }
+
+  function esVoices(){
+    return (synth.getVoices()||[]).filter(function(v){return /^(es|pt)/i.test(v.lang);})
+      .sort(function(a,b){ return score(b)-score(a); });
+  }
+
+  function autoVoice(){
+    var list=esVoices();
+    return list.length? list[0] : null;
+  }
+
+  function isNatural(v){
+    var n=(v.name||'').toLowerCase();
+    return NATURAL.some(function(k){return n.indexOf(k)>=0;});
+  }
+
+  function buildPicker(){
+    var host=document.getElementById('voicepick'); if(!host) return;
+    var list=esVoices();
+    if(!list.length){ return; }
+    if(!selectedVoice) selectedVoice=autoVoice();
+    host.innerHTML='';
+    var lbl=document.createElement('span');
+    lbl.textContent='Voz: ';
+    lbl.style.cssText='font-size:.85rem;font-weight:700;color:#0b5d73';
+    var sel=document.createElement('select');
+    sel.style.cssText='font-size:.85rem;padding:5px 8px;border-radius:8px;border:1px solid #bfe3cd;max-width:100%';
+    list.forEach(function(v,i){
+      var o=document.createElement('option');
+      o.value=v.name;
+      o.textContent=v.name.replace(/Microsoft|Online|\(.*?\)/g,'').trim()+(isNatural(v)?'  (natural) ★':'')+'  · '+v.lang;
+      if(selectedVoice && v.name===selectedVoice.name) o.selected=true;
+      sel.appendChild(o);
+    });
+    sel.addEventListener('change', function(){
+      selectedVoice = list.find(function(v){return v.name===sel.value;}) || autoVoice();
+      // muestra de la voz elegida
+      stop();
+      var u=new SpeechSynthesisUtterance('Hola, soy vuestra guía. Así sonará la audioguía de Madeira.');
+      if(selectedVoice){u.voice=selectedVoice;u.lang=selectedVoice.lang;} u.rate=0.97;
+      synth.speak(u);
+    });
+    host.appendChild(lbl); host.appendChild(sel);
   }
 
   function stop(){
@@ -932,9 +987,10 @@
   function speak(btn, text){
     if(current === btn){ stop(); return; } // segundo clic = parar
     stop();
+    if(!selectedVoice) selectedVoice=autoVoice();
     var u = new SpeechSynthesisUtterance(text);
-    var v = pickVoice(); if(v){ u.voice=v; u.lang=v.lang; } else { u.lang='es-ES'; }
-    u.rate=0.98; u.pitch=1;
+    if(selectedVoice){ u.voice=selectedVoice; u.lang=selectedVoice.lang; } else { u.lang='es-ES'; }
+    u.rate=0.97; u.pitch=1.02;
     u.onend = function(){ if(current===btn){ btn.textContent='🔊 Escuchar'; btn.classList.remove('on'); current=null; } };
     current=btn; btn.textContent='⏹ Parar'; btn.classList.add('on');
     synth.speak(u);
@@ -955,8 +1011,10 @@
     b.appendChild(btn);
   });
 
-  // Algunas voces cargan tarde
-  if(synth.onvoiceschanged !== undefined){ synth.onvoiceschanged = pickVoice; }
+  // Construir el selector (las voces a veces cargan tarde)
+  buildPicker();
+  if(synth.onvoiceschanged !== undefined){ synth.onvoiceschanged = function(){ selectedVoice=selectedVoice||autoVoice(); buildPicker(); }; }
+  setTimeout(buildPicker, 600); setTimeout(buildPicker, 1500);
   // Parar el audio si el usuario cambia de pestaña
   document.addEventListener('visibilitychange', function(){ if(document.hidden){ stop(); } });
 })();
