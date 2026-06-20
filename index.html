@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Madeira · Itinerario 22–24 junio 2026</title>
+<style>
+  :root{
+    --ocean:#0b5d73; --ocean-dark:#073b49; --leaf:#1f7a4d; --leaf-light:#e7f3ec;
+    --coral:#e0623d; --sun:#f2a44d; --ink:#1c2b30; --muted:#5d6f74;
+    --paper:#fbfaf6; --card:#ffffff; --line:#e3e1d8; --rain:#3d7ea6;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink); background:var(--paper); line-height:1.55; font-size:16px;}
+  a{color:var(--ocean); text-decoration:none;}
+  .wrap{max-width:880px; margin:0 auto; padding:0 20px 80px;}
+
+  .hero{background:linear-gradient(135deg,var(--ocean-dark),var(--ocean) 55%,var(--leaf));
+    color:#fff; padding:54px 20px 46px; text-align:center; position:relative; overflow:hidden;}
+  .hero h1{margin:0 0 6px; font-size:2.5rem; letter-spacing:-.5px; font-weight:800;}
+  .hero .sub{font-size:1.15rem; opacity:.95; margin:0 0 18px;}
+  .hero .meta{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:10px;}
+  .pill{background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.28);
+    padding:6px 14px; border-radius:30px; font-size:.86rem; backdrop-filter:blur(4px);}
+  .hero::after{content:"🌋🌊🌿"; position:absolute; font-size:5rem; opacity:.08; right:-10px; bottom:-18px;}
+
+  h2.sec{font-size:1.5rem; margin:42px 0 14px; padding-bottom:8px; border-bottom:3px solid var(--line);
+    display:flex; align-items:center; gap:10px;}
+  h2.sec .ic{font-size:1.4rem;}
+
+  .wx{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:6px;}
+  .wx .d{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; position:relative;}
+  .wx .d .tag{position:absolute; top:-10px; right:12px; font-size:.7rem; font-weight:700; color:#fff;
+    padding:3px 10px; border-radius:20px;}
+  .tag.best{background:var(--leaf);} .tag.worst{background:var(--coral);} .tag.mid{background:var(--rain);}
+  .wx .d h4{margin:0 0 4px; font-size:1.05rem;}
+  .wx .d .t{font-size:1.4rem; font-weight:800; color:var(--ocean);}
+  .wx .d .p{font-size:.86rem; color:var(--muted); margin:6px 0 0;}
+
+  .rule{background:var(--leaf-light); border-left:5px solid var(--leaf); padding:14px 18px;
+    border-radius:0 10px 10px 0; margin:18px 0; font-size:.96rem;}
+
+  #map{height:440px; width:100%; border:1px solid var(--line); border-radius:16px; margin-top:6px; z-index:0;}
+  .marker-num{display:flex; align-items:center; justify-content:center; width:26px; height:26px;
+    border-radius:50%; color:#fff; font-weight:800; font-size:.8rem; border:2px solid #fff;
+    box-shadow:0 1px 4px rgba(0,0,0,.4);}
+  .legend{display:flex; gap:16px; flex-wrap:wrap; margin:12px 0 0; font-size:.85rem;}
+  .legend span{display:flex; align-items:center; gap:6px;}
+  .legend i{width:14px; height:14px; border-radius:50%; display:inline-block;}
+  .route-btn{display:inline-flex; align-items:center; gap:8px; color:#fff;
+    padding:11px 18px; border-radius:30px; font-weight:700; font-size:.92rem; margin:4px 0; text-decoration:none;}
+  .route-btn.g2{background:var(--leaf);} .route-btn.g3{background:var(--coral);}
+  table.drive{width:100%; border-collapse:collapse; margin:10px 0 4px; font-size:.9rem;}
+  table.drive th{text-align:left; background:#f1efe7; padding:8px 10px; font-size:.8rem;
+    text-transform:uppercase; letter-spacing:.5px; color:var(--muted);}
+  table.drive td{padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:middle;}
+  table.drive td.min{font-weight:800; color:var(--ocean); white-space:nowrap;}
+  table.drive td.n{width:26px;}
+  .dot{display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px;
+    border-radius:50%; color:#fff; font-weight:800; font-size:.72rem;}
+  .c1{background:#3d7ea6;} .c2{background:#1f7a4d;} .c3{background:#e0623d;} .cb{background:#5d6f74;}
+  .totrow td{background:#f7f5ee; font-weight:700;}
+
+  .day{background:var(--card); border:1px solid var(--line); border-radius:18px; padding:0;
+    margin:22px 0; overflow:hidden; box-shadow:0 2px 14px rgba(7,59,73,.05);}
+  .day > .head{padding:20px 24px; color:#fff; position:relative;}
+  .day.d1 > .head{background:linear-gradient(120deg,#3d7ea6,#0b5d73);}
+  .day.d2 > .head{background:linear-gradient(120deg,#1f7a4d,#0b7a63);}
+  .day.d3 > .head{background:linear-gradient(120deg,#b5532f,#e0623d);}
+  .day .head .dnum{font-size:.8rem; text-transform:uppercase; letter-spacing:2px; opacity:.85;}
+  .day .head h3{margin:2px 0 4px; font-size:1.5rem;}
+  .day .head .head-sub{font-size:.92rem; opacity:.95;}
+  .day .body{padding:8px 24px 22px;}
+
+  .step{display:flex; gap:16px; padding:14px 0; border-bottom:1px dashed var(--line);}
+  .step:last-child{border-bottom:none;}
+  .step .time{flex:0 0 64px; font-weight:800; font-size:.92rem; padding-top:1px;}
+  .day.d1 .step .time{color:var(--rain);}
+  .day.d2 .step .time{color:var(--leaf);}
+  .day.d3 .step .time{color:var(--coral);}
+  .step .what{flex:1;}
+  .step .what .ttl{font-weight:700; margin-bottom:2px;}
+  .step .what p{margin:3px 0 0; font-size:.92rem; color:var(--muted);}
+  .maps{display:inline-block; margin-top:7px; font-size:.78rem; background:var(--leaf-light);
+    color:var(--leaf); padding:3px 10px; border-radius:20px; border:1px solid #cfe6d8; font-weight:600;}
+  .maps::before{content:"📍 ";}
+  .alt{background:#fff7ee; border:1px dashed var(--sun); border-radius:10px; padding:10px 14px;
+    margin-top:12px; font-size:.88rem; color:#8a5a1e;}
+  .alt strong{color:var(--coral);}
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .food{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px;}
+  .food h4{margin:0 0 4px; font-size:1rem; color:var(--coral);}
+  .food p{margin:0; font-size:.88rem; color:var(--muted);}
+
+  .intro-hist{background:linear-gradient(135deg,var(--ocean-dark),var(--ocean) 60%,var(--leaf));
+    color:#fff; border-radius:16px; padding:24px 26px; margin:14px 0 20px;}
+  .intro-hist p{margin:0 0 12px; font-size:.98rem; opacity:.97;}
+  .intro-hist p:last-child{margin-bottom:0;}
+  .intro-hist .dropcap::first-letter{font-size:3rem; font-weight:800; float:left; line-height:.78;
+    padding:6px 10px 0 0; color:var(--sun);}
+  .histday{font-size:1.15rem; color:var(--ocean-dark); margin:26px 0 10px; font-weight:800;
+    border-bottom:2px solid var(--line); padding-bottom:6px;}
+  .hist{background:#fffdf6; border:1px solid #ece3cc; border-left:5px solid var(--sun);
+    border-radius:0 12px 12px 0; padding:15px 20px; margin:12px 0;}
+  .hist h4{margin:0 0 4px; font-size:1.06rem; color:var(--ocean-dark);}
+  .hist .tie{display:inline-block; font-size:.74rem; font-weight:700; color:var(--leaf);
+    background:var(--leaf-light); border:1px solid #cfe6d8; border-radius:20px; padding:2px 10px; margin-bottom:8px;}
+  .hist p{margin:0 0 8px; font-size:.94rem; color:var(--ink);}
+  .hist p:last-child{margin-bottom:0;}
+  .hist b.k{color:var(--coral);}
+
+  ul.notes{list-style:none; padding:0; margin:0;}
+  ul.notes li{background:var(--card); border:1px solid var(--line); border-radius:10px;
+    padding:12px 16px; margin-bottom:10px; font-size:.93rem;}
+  ul.notes li b{color:var(--ocean);}
+  .warn{background:#fdece7; border:1px solid #f3b6a3; border-radius:10px; padding:14px 18px; margin:14px 0; font-size:.93rem;}
+  .warn b{color:var(--coral);}
+  .check{display:flex; align-items:flex-start; gap:10px; background:var(--card); border:1px solid var(--line);
+    border-radius:10px; padding:11px 15px; margin-bottom:8px; font-size:.92rem;}
+  .check .box{flex:0 0 18px; height:18px; border:2px solid var(--ocean); border-radius:4px; margin-top:2px;}
+
+  footer{text-align:center; color:var(--muted); font-size:.82rem; margin-top:50px;}
+
+  @media print{
+    body{font-size:12px; background:#fff;}
+    .hero{padding:24px;} .hero::after{display:none;}
+    .day, .food, ul.notes li, .check{break-inside:avoid; box-shadow:none;}
+    .maps{border:none; background:none; color:#0b5d73; padding:0;}
+    .route-btn{border:1px solid var(--line); color:var(--ink);}
+    h2.sec{break-after:avoid;} #map{height:300px;} .wrap{padding-bottom:10px;}
+  }
+  @media(max-width:620px){
+    .wx{grid-template-columns:1fr;} .grid2{grid-template-columns:1fr;}
+    .hero h1{font-size:1.9rem;} .step .time{flex-basis:54px;} #map{height:360px;}
+  }
+</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Madeira a fondo</h1>
+  <p class="sub">Escapada en pareja · 22 – 24 junio 2026 · coche de alquiler · base en Funchal</p>
+  <div class="meta">
+    <span class="pill">🏙️ Lun · Funchal</span>
+    <span class="pill">🌅 Mar · Centro + Norte + Buggies</span>
+    <span class="pill">🌊 Mié · Oeste completo</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- TIEMPO -->
+  <h2 class="sec"><span class="ic">⛅</span> El tiempo</h2>
+  <div class="wx">
+    <div class="d"><span class="tag worst">el peor</span>
+      <h4>Lun 22</h4><div class="t">13–17°</div>
+      <p>50% tormenta → <b>día de Funchal</b> (tiene plan llueva o no).</p>
+    </div>
+    <div class="d"><span class="tag best">el mejor</span>
+      <h4>Mar 23</h4><div class="t">12–16°</div>
+      <p>Despejado → <b>Pico do Arieiro al amanecer</b> (cielo limpio) + norte + buggies.</p>
+    </div>
+    <div class="d"><span class="tag mid">variable</span>
+      <h4>Mié 24</h4><div class="t">11–16°</div>
+      <p>40% lluvia, pero la <b>costa oeste/sur</b> es el lado más soleado → día del oeste.</p>
+    </div>
+  </div>
+  <div class="rule">🧭 <b>Regla de oro del microclima:</b> el <b>este y el sur</b> son la parte seca y soleada;
+    el <b>norte y el centro</b>, lo nublado. Por eso el <b>Pico do Arieiro va el martes</b> (el día despejado):
+    con nubes no se ve nada. Cada mañana mira el cielo y ajusta el orden.</div>
+
+  <!-- MAPA -->
+  <h2 class="sec"><span class="ic">🗺️</span> Mapa y tiempos en coche</h2>
+  <p style="color:var(--muted); font-size:.93rem; margin-top:-4px;">Puntos numerados por orden del viaje.
+    Toca un número para ver el nombre y abrirlo en Google Maps. Los botones <b>"Abrir ruta del día"</b> lanzan la
+    navegación con todas las paradas en la app del móvil (con tiempos en vivo).</p>
+  <div id="map"></div>
+  <div class="legend">
+    <span><i style="background:#3d7ea6"></i> Día 1 · Funchal (a pie)</span>
+    <span><i style="background:#1f7a4d"></i> Día 2 · Centro + Norte + Buggies</span>
+    <span><i style="background:#e0623d"></i> Día 3 · Oeste</span>
+    <span><i style="background:#5d6f74"></i> Base / aeropuerto</span>
+  </div>
+
+  <!-- TIEMPOS DÍA 2 -->
+  <h3 style="margin:26px 0 4px; color:var(--leaf);">🚗 Día 2 (martes) · tiempos entre paradas</h3>
+  <a class="route-btn g2" target="_blank"
+     href="https://www.google.com/maps/dir/?api=1&origin=32.6450,-16.9300&destination=32.7390,-16.7280&waypoints=32.7357,-16.9285%7C32.7330,-16.8870%7C32.8000,-16.8830%7C32.7770,-16.8270&travelmode=driving">
+     ▶︎ Abrir ruta del día 2 en Google Maps</a>
+  <table class="drive">
+    <tr><th class="n">#</th><th>Parada</th><th>Hora</th><th>Coche</th></tr>
+    <tr><td class="n"><span class="dot cb">H</span></td><td>Funchal · <b>salida</b></td><td class="min">9:00</td><td>—</td></tr>
+    <tr><td class="n"><span class="dot c2">7</span></td><td>Pico do Arieiro</td><td class="min">9:40</td><td>~40 min</td></tr>
+    <tr><td class="n"><span class="dot c2">8</span></td><td>Ribeiro Frio + <b>Balcões (ruta)</b></td><td class="min">10:45</td><td>~20 min</td></tr>
+    <tr><td class="n"><span class="dot c2">9</span></td><td>Santana</td><td class="min">12:30</td><td>~25 min</td></tr>
+    <tr><td class="n"><span class="dot c2">10</span></td><td>Porto da Cruz · comida</td><td class="min">13:25</td><td>~25 min</td></tr>
+    <tr><td class="n"><span class="dot c2">11</span></td><td><b>Buggies · Caniçal</b></td><td class="min">14:30</td><td>~25 min</td></tr>
+    <tr><td class="n"><span class="dot c2">12</span></td><td>Ponta de São Lourenço</td><td class="min">17:30</td><td>~7 min</td></tr>
+    <tr><td class="n"><span class="dot c2">13</span></td><td>Prainha (baño) + <b>cena Caniçal</b></td><td class="min">18:15</td><td>~7 min</td></tr>
+    <tr class="totrow"><td></td><td>Total al volante (sin paradas)</td><td></td><td class="min">~2 h 50</td></tr>
+  </table>
+
+  <!-- TIEMPOS DÍA 3 -->
+  <h3 style="margin:26px 0 4px; color:var(--coral);">🚗 Día 3 (miércoles) · tiempos entre paradas</h3>
+  <a class="route-btn g3" target="_blank"
+     href="https://www.google.com/maps/dir/?api=1&origin=32.6450,-16.9300&destination=32.6450,-16.9300&waypoints=32.6500,-16.9770%7C32.6560,-16.9930%7C32.6740,-17.0640%7C32.6810,-17.1010%7C32.7180,-17.1770%7C32.8660,-17.1670%7C32.8230,-17.1050%7C32.7565,-17.1480%7C32.7490,-17.0150&travelmode=driving">
+     ▶︎ Abrir ruta del día 3 en Google Maps</a>
+  <table class="drive">
+    <tr><th class="n">#</th><th>Parada</th><th>Hora</th><th>Coche</th></tr>
+    <tr><td class="n"><span class="dot cb">H</span></td><td>Funchal · <b>salida</b></td><td class="min">9:30</td><td>—</td></tr>
+    <tr><td class="n"><span class="dot c3">14</span></td><td>Câmara de Lobos</td><td class="min">9:45</td><td>~15 min</td></tr>
+    <tr><td class="n"><span class="dot c3">15</span></td><td>Cabo Girão</td><td class="min">10:15</td><td>~15 min</td></tr>
+    <tr><td class="n"><span class="dot c3">16</span></td><td>Ribeira Brava</td><td class="min">10:45</td><td>~15 min</td></tr>
+    <tr><td class="n"><span class="dot c3">17</span></td><td>Ponta do Sol</td><td class="min">11:10</td><td>~10 min</td></tr>
+    <tr><td class="n"><span class="dot c3">18</span></td><td>Calheta · comida + baño</td><td class="min">11:45</td><td>~15 min</td></tr>
+    <tr><td class="n"><span class="dot c3">19</span></td><td>Porto Moniz · piscinas</td><td class="min">14:30</td><td>~35 min</td></tr>
+    <tr><td class="n"><span class="dot c3">20</span></td><td>Seixal · piscinas</td><td class="min">16:00</td><td>~15 min</td></tr>
+    <tr><td class="n"><span class="dot c3">F</span></td><td>Fanal · bosque de niebla <i>(opcional)</i></td><td class="min">16:45</td><td>~30 min</td></tr>
+    <tr><td class="n"><span class="dot c3">E</span></td><td>Mirador da Encumeada <i>(opcional)</i></td><td class="min">17:45</td><td>~35 min</td></tr>
+    <tr><td class="n"><span class="dot cb">H</span></td><td>Vuelta a Funchal · cena 20:00</td><td class="min">~19:00</td><td>~45 min</td></tr>
+    <tr class="totrow"><td></td><td>Total al volante (con Fanal + Encumeada)</td><td></td><td class="min">~3 h 30</td></tr>
+  </table>
+  <p style="color:var(--muted); font-size:.86rem; margin-top:6px;">📍 <b>Día 1</b> es a pie + teleférico dentro de
+    Funchal/Monte, casi sin coche. 🕐 <b>Día 3 con margen:</b> tras Seixal sobra tarde → la rellenan <b>Fanal</b> y el
+    <b>mirador da Encumeada</b> (ambos casi sin andar). ✂️ Si llueve en el noroeste o lo veis largo, parad en Calheta
+    y volved (os ahorráis ~1h40 de coche).</p>
+
+  <!-- DÍA 1 -->
+  <h2 class="sec"><span class="ic">🏙️</span> Lunes 22 · Funchal a fondo</h2>
+  <p style="color:var(--muted); font-size:.93rem; margin-top:-4px;">El día lluvioso, así que lo dedicas a la ciudad.
+  Dejas la zona vieja para la noche, que es cuando vale la pena.</p>
+  <div class="day d1">
+    <div class="head"><div class="dnum">Día 1 · ciudad</div><h3>Funchal · mercado, vino, Monte y puertas pintadas</h3>
+      <div class="head-sub">Plan a cubierto si llueve · al aire libre si abre el sol</div></div>
+    <div class="body">
+      <div class="step"><div class="time">9:30</div><div class="what">
+        <div class="ttl">Mercado dos Lavradores</div>
+        <p>El mercado de Funchal, techado. Flores de la isla, el pescado (busca el <b>espada negro</b>, ese pez de
+        abismo con cara de pesadilla) y el puesto de frutas exóticas donde te dan a probar: anona, maracujá, pitanga.
+        Tómate una poncha.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Mercado+dos+Lavradores+Funchal" target="_blank">Mercado dos Lavradores</a>
+      </div></div>
+      <div class="step"><div class="time">11:45</div><div class="what">
+        <div class="ttl">Cata de vino de Madeira · Blandy's Wine Lodge</div>
+        <p>El vino de Madeira es <b>LA joya de la isla</b>: fortificado y "cocido", se hizo famoso porque aguantaba
+        los viajes en barco sin estropearse. Con él se brindó la Declaración de Independencia de EE.UU. en 1776.
+        Las catas suelen ser a hora fija (~11:45) — <b>reserva online</b>; el mercado os llena la mañana antes.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Blandy's+Wine+Lodge+Funchal" target="_blank">Blandy's Wine Lodge</a>
+      </div></div>
+      <div class="step"><div class="time">12:45</div><div class="what">
+        <div class="ttl">Sé · Catedral de Funchal</div>
+        <p>De finales del siglo XV, de las primeras de la era de los descubrimientos. Fíjate en el techo de madera de cedro.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Sé+Catedral+Funchal" target="_blank">Sé Catedral</a>
+      </div></div>
+      <div class="step"><div class="time">13:30</div><div class="what">
+        <div class="ttl">Comida</div>
+        <p>En el centro. Buen momento para el primer <b>bolo do caco</b> con mantequilla de ajo.</p>
+      </div></div>
+      <div class="step"><div class="time">15:00</div><div class="what">
+        <div class="ttl">Teleférico a Monte (ida y vuelta)</div>
+        <p>Subida con vistas a toda la bahía de Funchal. <b>Compra billete ida y vuelta</b> para bajar igual (sin
+        carros de cesto). 🅿️ Aparca cerca de la estación base (Almirante Reis / parking del Mercado) o ve andando.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Teleférico+do+Funchal+Monte" target="_blank">Teleférico a Monte</a>
+      </div></div>
+      <div class="step"><div class="time">15:20</div><div class="what">
+        <div class="ttl">Jardim Monte Palace + Igreja de Nossa Senhora do Monte</div>
+        <p>Jardín tropical de ensueño (sin prisa, tenéis la tarde). En la iglesia está enterrado <b>Carlos I</b>, el
+        último emperador de Austria-Hungría, que murió exiliado aquí en 1922. Bajada en teleférico ~17:30.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Monte+Palace+Tropical+Garden" target="_blank">Monte Palace</a>
+      </div></div>
+      <div class="step"><div class="time">18:30</div><div class="what">
+        <div class="ttl">Zona Velha · puertas pintadas + aperitivo</div>
+        <p><b>Rua de Santa Maria:</b> la calle de las puertas pintadas (proyecto "Arte de Portas Abertas", 200+ puertas
+        decoradas por artistas). Copa con vistas en <b>Three House Rooftop</b> o en <b>Barreirinha Bar</b> (junto al
+        Forte de São Tiago).</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Rua+de+Santa+Maria+Funchal" target="_blank">Rua de Santa Maria</a>
+      </div></div>
+      <div class="step"><div class="time">20:00</div><div class="what">
+        <div class="ttl">Cena en la Zona Velha</div>
+        <p>Marisco y cocina madeirense en <b>Kampo</b>, <b>Gavião Novo</b> o <b>Santa Maria</b> (reserva para las 20:00).
+        <b>O Informal</b> es buenísimo pero no reserva y sienta pronto: si os tienta, id a las 18:00 a por la lista.</p>
+      </div></div>
+      <div class="alt">⏰ <strong>Ojo horarios:</strong> el jardín de Monte cierra sobre las 18:00 y la cata de Blandy's
+        es a hora fija (resérvala). Si abre el sol por la mañana, cambia el orden: Promenade do Lido/playa primero y el
+        interior por la tarde.</div>
+    </div>
+  </div>
+
+  <!-- DÍA 2 -->
+  <h2 class="sec"><span class="ic">🌅</span> Martes 23 · El mejor día: Pico do Arieiro, norte y buggies</h2>
+  <p style="color:var(--muted); font-size:.93rem; margin-top:-4px;">Salís a las <b>9:00</b> derechos al Arieiro
+  (con nubes no se ve), bajáis por el norte con una <b>levada fácil</b> de regalo y termináis en los <b>buggies de
+  Caniçal a las 14:30</b>. Paradas cortas: ver mucho sin pasar demasiado rato en cada sitio.</p>
+  <div class="day d2">
+    <div class="head"><div class="dnum">Día 2 · centro + norte + este</div><h3>Arieiro → Ribeiro Frio → Santana → Buggies</h3>
+      <div class="head-sub">Salida 9:00 · el Pico do Arieiro primero (las nubes suben a mediodía)</div></div>
+    <div class="body">
+      <div class="step"><div class="time">9:40</div><div class="what">
+        <div class="ttl">Pico do Arieiro · el techo accesible (1.818 m)</div>
+        <p>El <b>mirador nº1 de la isla</b>, y se llega en coche: picos centrales enfrente y, con suerte, mar de nubes
+        a vuestros pies. Lo mejor del paisaje sin andar. Id <b>lo antes que podáis</b> (las nubes suben a mediodía) y
+        llevad <b>abrigo</b>: arriba hace frío aunque en Funchal haga sol.</p>
+        <p>🅿️ <b>Aparcamiento</b> gratuito arriba, junto al café/observatorio; si está lleno, hay otro a ~10 min
+        andando. El mirador es gratis y sin reserva.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Pico+do+Arieiro" target="_blank">Pico do Arieiro</a>
+      </div></div>
+      <div class="step"><div class="time">10:45</div><div class="what">
+        <div class="ttl">🥾 Vereda dos Balcões · vuestra ruta fácil</div>
+        <p>La <b>levada más sencilla y agradecida de la isla</b>: ~35 min de ida casi llanos por el bosque de laurel
+        hasta un <b>mirador de los picos centrales</b>. Pura vista, poco andar. <b>Se encuentra fácil:</b> el sendero
+        está señalizado y sale del propio pueblo de Ribeiro Frio. <i>Requiere reserva online gratuita (ver notas).</i>
+        Calzado con algo de agarre.</p>
+        <p>🅿️ <b>Aparca en Ribeiro Frio</b>, a los lados de la ER103 junto al restaurante y el viveiro de trutas
+        (criadero de truchas); el inicio del sendero está a 2 min andando (no hay que conducir más).</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Vereda+dos+Balcões+Ribeiro+Frio" target="_blank">Vereda dos Balcões</a>
+      </div></div>
+      <div class="step"><div class="time">12:30</div><div class="what">
+        <div class="ttl">Santana · casas de colmo</div>
+        <p>Las icónicas <b>casitas triangulares</b> con techo de paja de colores. Foto, paseo corto y un tentempié.</p>
+        <p>🅿️ Aparcamiento gratuito junto a las casas / el Parque Temático (centro de Santana).</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Casas+Típicas+de+Santana" target="_blank">Casas de Santana</a>
+      </div></div>
+      <div class="step"><div class="time">13:25</div><div class="what">
+        <div class="ttl">Comida rápida de camino al este</div>
+        <p>Algo ligero en <b>Porto da Cruz</b> (pueblo de postal bajo la <b>Penha de Águia</b>) o en Machico. Que sea
+        rápido: a las <b>13:45</b> hay que arrancar hacia los buggies.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Porto+da+Cruz+Madeira" target="_blank">Porto da Cruz (opcional)</a>
+      </div></div>
+      <div class="step"><div class="time">14:30</div><div class="what">
+        <div class="ttl">BUGGIES 🏜️ · Caniçal → Funduras → Portela (reservado)</div>
+        <p><b>Horario afinado:</b> salís de Porto da Cruz/Machico a las <b>~13:45</b> → ~25 min de coche → <b>llegáis a
+        Caniçal ~14:10</b> (20 min de margen) → buggies <b>14:30</b>. Duración ~2,5–3 h por la <b>Serra das Funduras</b>
+        y el mirador da <b>Portela</b>; vistas y fotos brutales.</p>
+        <p>🅿️ Punto de encuentro: <b>Estr. de São Lourenço 100, Caniçal</b> — aparca en el pueblo o donde te indique
+        el operador al confirmar. Ropa que se pueda ensuciar, gafas de sol y agua.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Estrada+de+São+Lourenço+100+Caniçal" target="_blank">Punto buggies (Caniçal)</a>
+      </div></div>
+      <div class="step"><div class="time">~17:30</div><div class="what">
+        <div class="ttl">Ponta de São Lourenço · mirador</div>
+        <p>Al bajar de los buggies, a 7 min: el extremo este de la isla, acantilados rojizos y, con suerte, las Islas
+        Desertas al fondo. Desde el aparcamiento de <b>Baía d'Abra</b> ya hay vistón sin andar.</p>
+        <p>🅿️ Aparcamiento al final de la carretera ER109 (Baía d'Abra); a esta hora suele haber sitio.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Baía+d'Abra+Ponta+de+São+Lourenço" target="_blank">Ponta de São Lourenço</a>
+      </div></div>
+      <div class="step"><div class="time">18:15</div><div class="what">
+        <div class="ttl">🏖️ Prainha · el hueco antes de cenar (18:00–20:00)</div>
+        <p>Para no esperar de brazos cruzados entre el mirador y la cena: <b>Prainha</b>, la única playa de <b>arena
+        natural</b> (negra) de la isla, a 5 min. Un baño para quitaros el polvo de los buggies o una caña con vistas.
+        Alternativa: pasear por el puerto de <b>Machico</b> (10 min).</p>
+        <p>🅿️ Pequeño aparcamiento sobre la cala (se llena; si no hay, tirad a Machico).</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Prainha+Caniçal" target="_blank">Prainha</a>
+      </div></div>
+      <div class="step"><div class="time">20:00</div><div class="what">
+        <div class="ttl">Cena · Caniçal (Frente ao Sol) o de vuelta en Funchal</div>
+        <p>En Caniçal, antiguo pueblo ballenero: pulpo, lapas, castanhetas, bueno y barato. Si preferís cenar en
+        Funchal, salid de Caniçal sobre las 19:20 (30 min de autopista).</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Restaurante+Frente+ao+Sol+Caniçal" target="_blank">Frente ao Sol</a>
+      </div></div>
+      <div class="alt">⚖️ <strong>Margen ajustado por la mañana:</strong> con salida a las 9:00, Arieiro + Balcões +
+        Santana llegan justos a los buggies. Si vais con calma, haz <strong>solo Arieiro y Balcões</strong> y deja
+        Santana en una foto rápida. El Arieiro es la prioridad mientras el cielo esté limpio.</div>
+    </div>
+  </div>
+
+  <!-- DÍA 3 -->
+  <h2 class="sec"><span class="ic">🌊</span> Miércoles 24 · El oeste completo</h2>
+  <p style="color:var(--muted); font-size:.93rem; margin-top:-4px;">Día entero para la costa oeste — justo lo que
+  no ibas a ver. Costa sur soleada, piscinas de lava en el noroeste y un montón de miradores de pasada.</p>
+  <div class="day d3">
+    <div class="head"><div class="dnum">Día 3 · costa oeste</div><h3>Câmara de Lobos → Cabo Girão → Calheta → Porto Moniz</h3>
+      <div class="head-sub">Ruta de costa con paradas cortas; baño en Calheta y/o piscinas de Porto Moniz</div></div>
+    <div class="body">
+      <div class="step"><div class="time">9:45</div><div class="what">
+        <div class="ttl">Câmara de Lobos · poncha y barcas</div>
+        <p>Pueblo de pescadores donde <b>Churchill</b> venía a pintar en 1950 (hay un rincón con su nombre) y
+        <b>cuna de la poncha</b>. Café o primera poncha entre las barcas de colores. Cerca, el <b>espetada</b>
+        (ternera en palo de laurel) nació por esta zona.</p>
+        <p>🅿️ Aparcamiento del puerto (Largo do Poço) o el cubierto bajo la plaza.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Câmara+de+Lobos+Madeira" target="_blank">Câmara de Lobos</a>
+      </div></div>
+      <div class="step"><div class="time">10:15</div><div class="what">
+        <div class="ttl">Cabo Girão · skywalk de cristal</div>
+        <p>El acantilado marino más alto de Europa (580 m), con plataforma de cristal sobre el vacío. Abajo se ven
+        las <b>fajãs</b>, huertos al borde del mar a los que se baja en otro teleférico.</p>
+        <p>🅿️ Aparcamiento gratuito junto a la entrada del skywalk.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Cabo+Girão+Skywalk" target="_blank">Cabo Girão</a>
+      </div></div>
+      <div class="step"><div class="time">10:45</div><div class="what">
+        <div class="ttl">Ribeira Brava + Ponta do Sol</div>
+        <p>Dos paradas cortas de costa: la iglesia de azulejos de Ribeira Brava y <b>Ponta do Sol</b>, el rincón más
+        soleado de la isla (de ahí el nombre), con pueblos blancos colgados sobre el mar.</p>
+        <p>🅿️ En ambos, aparcamiento en el frente marítimo (paseo).</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Ponta+do+Sol+Madeira" target="_blank">Ponta do Sol</a>
+      </div></div>
+      <div class="step"><div class="time">11:45</div><div class="what">
+        <div class="ttl">Calheta · playa de arena dorada + baño</div>
+        <p>Una de las dos únicas playas de <b>arena</b> de la isla (importada), con bahía protegida ideal para un
+        chapuzón. Comida aquí (espada com banana, lapas). Sin prisa: hay tarde de sobra.</p>
+        <p>🅿️ Aparcamiento de la marina / puerto deportivo, junto a la playa.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Praia+da+Calheta+Madeira" target="_blank">Praia da Calheta</a>
+      </div></div>
+      <div class="step"><div class="time">14:30</div><div class="what">
+        <div class="ttl">Porto Moniz · piscinas naturales de lava</div>
+        <p>El gran premio del oeste: <b>piscinas volcánicas</b> de roca negra llenas por el Atlántico, en el extremo
+        noroeste. Llevad <b>escarpines</b> y bañador. La carretera de bajada por la costa norte es de las más bonitas
+        de la isla.</p>
+        <p>🅿️ Aparcamiento junto a las piscinas (Cais do Porto Moniz).</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Piscinas+Naturais+Porto+Moniz" target="_blank">Porto Moniz</a>
+      </div></div>
+      <div class="step"><div class="time">16:00</div><div class="what">
+        <div class="ttl">Seixal · piscinas y cascadas</div>
+        <p>Más piscinas naturales (las de <b>Seixal</b>, sobre arena negra) y, de camino, la cascada <b>Véu da Noiva</b>
+        en un mirador de la costa norte.</p>
+        <p>🅿️ Aparcamiento junto a las piscinas naturales del Seixal.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Piscinas+Naturais+do+Seixal" target="_blank">Seixal</a>
+      </div></div>
+      <div class="step"><div class="time">16:45</div><div class="what">
+        <div class="ttl">🌫️ Fanal · bosque de niebla (opcional, rellena la tarde)</div>
+        <p>Subís a la meseta de <b>Paúl da Serra</b>: laureles centenarios retorcidos entre la niebla, uno de los
+        <b>paisajes más fotogénicos</b> de Madeira. Se ve casi desde el coche / con un paseo muy corto. Aviso: suele
+        haber niebla (esa es su gracia), pero a veces la tapa del todo — si está despejado arriba, no lo dudéis.</p>
+        <p>🅿️ Aparcamiento del área recreativa de Fanal, junto a la casa forestal.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Fanal+Madeira" target="_blank">Fanal</a>
+      </div></div>
+      <div class="step"><div class="time">17:45</div><div class="what">
+        <div class="ttl">Miradouro da Encumeada · vuelta escénica</div>
+        <p>El puerto de montaña que parte la isla: mirador a ambas costas (norte y sur) en plena bajada hacia Funchal.
+        Última foto del día sin bajar del coche apenas.</p>
+        <p>🅿️ Aparcamiento del mirador, en la ER228. Vuelta a Funchal ~45 min; cena a las 20:00.</p>
+        <a class="maps" href="https://www.google.com/maps/search/?api=1&query=Miradouro+da+Encumeada" target="_blank">Encumeada</a>
+      </div></div>
+      <div class="alt">☔ <strong>Plan B si el noroeste está cerrado de nubes/lluvia</strong> (es lo normal en esa
+        zona): quedaos en la costa sur soleada — Calheta tranquilos, <strong>Paul do Mar / Jardim do Mar</strong>
+        (pueblos surferos con encanto) y vuelta sin prisa. Os ahorráis ~1h40 de coche. Fanal solo merece con algo
+        de visibilidad.</div>
+    </div>
+  </div>
+
+  <!-- HISTORIA -->
+  <h2 class="sec"><span class="ic">📜</span> Madeira contada · vuestro guía historiador</h2>
+  <p style="color:var(--muted); font-size:.93rem; margin-top:-4px;">Para que cada parada signifique algo. Leedlo
+    la noche antes o en el coche: la isla cobra otra dimensión cuando sabéis lo que pisáis.</p>
+
+  <div class="intro-hist">
+    <p class="dropcap">Madeira no existía para el mundo hasta hace seis siglos — pero después medio mundo pasó por
+      ella. Brotó del Atlántico hace unos cinco millones de años sobre un punto caliente volcánico, y permaneció
+      <b>deshabitada</b> hasta que, en 1419, dos capitanes del Infante Don Enrique el Navegante —<b>João Gonçalves
+      Zarco</b> y Tristão Vaz Teixeira— arribaron a una costa cubierta de bosque tan denso que la llamaron sin más:
+      <b>«Madeira»</b>, madera. Para abrir tierras de cultivo prendieron fuego a la maleza; cuenta la leyenda que
+      ardió durante años. Donde hoy está Funchal crecía hinojo silvestre —<i>funcho</i>— y de ahí el nombre de la
+      capital.</p>
+    <p>Pronto la isla se convirtió en una mina: el <b>azúcar</b>, el «oro blanco», hizo de Funchal uno de los
+      puertos más ricos del Atlántico en el siglo XV. Llegaron mercaderes flamencos (por eso hay arte flamenco en
+      sus iglesias), esclavos para los cañaverales y, en 1478, un joven cartógrafo genovés llamado <b>Cristóbal
+      Colón</b>, que se casó con una madeirense y maduró aquí su idea de navegar hacia poniente. Cuando Brasil
+      hundió el precio del azúcar, la isla se reinventó con el <b>vino de Madeira</b>.</p>
+    <p>El resto lo escribieron el agua y la gente: más de <b>2.000 km de «levadas»</b> —canales que llevan el agua
+      del norte lluvioso al sur soleado, picados a mano en la roca— y la <b>Laurissilva</b>, el bosque de laurel
+      relicto del Terciario, hoy Patrimonio de la Humanidad. Parada obligada en la ruta atlántica hacia América e
+      India, Madeira vio pasar a Capitão Cook, al barco de Napoleón rumbo a Santa Elena y a una corte de ilustres
+      que vinieron a curarse o a esconderse: la emperatriz Sissi, el último emperador de Austria, Churchill con sus
+      pinceles, Bernard Shaw aprendiendo a bailar el tango. Y, ya en nuestro tiempo, un niño de Funchal llamado
+      Cristiano Ronaldo. Esto es lo que vais a recorrer.</p>
+  </div>
+
+  <div class="histday">🏙️ Día 1 · Funchal, la capital del azúcar y del vino</div>
+
+  <div class="hist">
+    <span class="tie">📍 Mercado dos Lavradores</span>
+    <h4>El mercado y el pez de las profundidades</h4>
+    <p>El <b>Mercado dos Lavradores</b> («de los labradores») se inauguró en 1940, un precioso edificio
+    <i>Art Déco</i> con paneles de azulejos. En su lonja reina el <b class="k">peixe-espada preto</b>, el pez espada
+    negro: un animal de aspecto demoníaco que vive a 800–1.000 m de profundidad y que los pescadores de Câmara de
+    Lobos aprendieron a capturar con palangres de kilómetros. Solo se pesca aquí y en Japón; pedidlo «com banana».</p>
+  </div>
+  <div class="hist">
+    <span class="tie">📍 Blandy's Wine Lodge</span>
+    <h4>El vino que brindó la independencia de un país</h4>
+    <p>La bodega ocupa un antiguo <b>convento franciscano del siglo XVI</b>. El secreto del vino de Madeira es el
+    calor: para imitar el traqueteo y el bochorno de las bodegas de los barcos —que, paradójicamente, lo
+    <i>mejoraban</i> en sus viajes a las Indias— se «cuece» (<b>estufagem</b> y <b>canteiro</b>), lo que lo hace casi
+    inmortal. Por eso fue el vino de los brindis solemnes: con él se selló la <b class="k">Declaración de
+    Independencia de EE. UU. en 1776</b>. Pedid un <b>Sercial</b> seco de aperitivo y un <b>Malvasia</b> (Malmsey)
+    dulce de postre — el mismo Malmsey en cuyo barril, según Shakespeare, ahogaron al duque de Clarence en 1478.</p>
+  </div>
+  <div class="hist">
+    <span class="tie">📍 Sé · Catedral</span>
+    <h4>El techo hecho del bosque que dio nombre a la isla</h4>
+    <p>Levantada entre 1493 y 1514 por orden del rey <b>Don Manuel I</b>, es una de las catedrales más antiguas del
+    mundo construidas fuera de Europa continental. Mirad hacia arriba: su <b class="k">techo de cedro</b> con
+    incrustaciones de marfil, de estilo mudéjar, está hecho con la madera nativa que hizo rica —y dio nombre— a
+    Madeira.</p>
+  </div>
+  <div class="hist">
+    <span class="tie">📍 Monte</span>
+    <h4>La colina de las quintas y la tumba de un emperador</h4>
+    <p>Monte, más alto y fresco, fue el refugio de verano de los ricos y de los convalecientes europeos. En su
+    iglesia, dedicada a la <b>patrona de la isla</b>, reposa <b class="k">Carlos I de Austria</b>, el último
+    emperador de Austria-Hungría: derrocado tras la Primera Guerra Mundial, murió aquí exiliado y sin un duro en
+    1922, con solo 34 años. La Iglesia católica lo beatificó en 2004.</p>
+  </div>
+  <div class="hist">
+    <span class="tie">📍 Zona Velha · Rua de Santa Maria</span>
+    <h4>El barrio de pescadores y las puertas pintadas</h4>
+    <p>Esta es la Funchal original, la de los pescadores. El cercano <b>Forte de São Tiago</b> (1614) se alzó para
+    defenderla de los <b>corsarios</b> argelinos y franceses que asolaban el Atlántico. Cuando el barrio se
+    degradó, el proyecto <b class="k">«Arte de Portas Abertas»</b> invitó a artistas a pintar sus puertas: hoy son
+    más de 200 y resucitaron toda la zona.</p>
+  </div>
+
+  <div class="histday">🌅 Día 2 · El techo, el bosque y la frontera salvaje del este</div>
+
+  <div class="hist">
+    <span class="tie">📍 Pico do Arieiro</span>
+    <h4>El corazón volcánico de la isla</h4>
+    <p>A 1.818 m, es la tercera cumbre de Madeira. Lo que pisáis es el <b>cráter erosionado</b> de la isla: millones
+    de años de lluvia y viento vaciaron el volcán original y dejaron este anfiteatro de agujas. Si hay <b>mar de
+    nubes</b>, estáis literalmente por encima del tiempo atmosférico del sur.</p>
+  </div>
+  <div class="hist">
+    <span class="tie">📍 Ribeiro Frio · Vereda dos Balcões</span>
+    <h4>La Laurissilva y el milagro de las levadas</h4>
+    <p>Camináis por la <b class="k">Laurissilva</b>, el mayor bosque de laurel que sobrevive en el planeta, reliquia
+    de la vegetación que cubría el sur de Europa hace 20 millones de años (Patrimonio de la Humanidad desde 1999). La
+    levada que seguís es una de esas venas de agua que, picadas a mano —a veces por esclavos colgados de cestos sobre
+    el precipicio—, hicieron habitable y fértil el lado seco de la isla.</p>
+  </div>
+  <div class="hist">
+    <span class="tie">📍 Santana</span>
+    <h4>Las casas triangulares de colmo</h4>
+    <p>Las <b>casas de colmo</b> —pequeñas, triangulares, con techo de paja a dos aguas y pintadas de rojo, azul y
+    blanco— son la arquitectura rural tradicional madeirense: el tejado bajaba hasta el suelo para protegerse del
+    frío y la humedad de la montaña. La zona de Santana es <b>Reserva de la Biosfera</b> de la UNESCO.</p>
+  </div>
+  <div class="hist">
+    <span class="tie">📍 Porto da Cruz</span>
+    <h4>El último ingenio de caña vaporizado</h4>
+    <p>Bajo el imponente monolito de la <b>Penha de Águia</b> («Roca del Águila», 590 m), Porto da Cruz conserva uno
+    de los <b class="k">últimos ingenios de caña de azúcar a vapor</b> aún en funcionamiento de Europa, donde se
+    destila la <i>aguardente de cana</i> con la que se hace vuestra poncha. Un eco vivo del «oro blanco» del siglo XV.</p>
+  </div>
+  <div class="hist">
+    <span class="tie">📍 Caniçal · buggies</span>
+    <h4>El pueblo de los balleneros</h4>
+    <p>Hoy huele a atún, pero hasta <b>1981</b> Caniçal fue el centro <b class="k">ballenero</b> de Madeira: de aquí
+    salían las lanchas a arponear cachalotes (su Museo de la Ballena lo cuenta). Estos paisajes áridos del este
+    sirvieron incluso de plató para la <i>Moby Dick</i> de John Huston (1956). Es la cara seca, volcánica y bravía
+    de la isla — perfecta para los buggies.</p>
+  </div>
+  <div class="hist">
+    <span class="tie">📍 Ponta de São Lourenço</span>
+    <h4>La proa de la isla y, al fondo, Machico</h4>
+    <p>Este cabo lleva el nombre de la nao de Zarco, la <i>São Lourenço</i>. Es geológicamente <b>lo más antiguo</b>
+    de Madeira: sin bosque, de tobas rojizas, mirando a las <b>Islas Desertas</b> (reserva de focas monje). Y muy
+    cerca está <b class="k">Machico</b>, donde Zarco desembarcó en 1419 y nació el primer asentamiento. Su nombre
+    viene de la leyenda de <b>Robert Machim</b> y Anna, dos amantes ingleses que, huyendo, naufragaron en esta bahía
+    siglos antes de la llegada portuguesa.</p>
+  </div>
+
+  <div class="histday">🌊 Día 3 · La costa oeste, del azúcar a la lava</div>
+
+  <div class="hist">
+    <span class="tie">📍 Câmara de Lobos</span>
+    <h4>Las focas, la poncha y los pinceles de Churchill</h4>
+    <p>El nombre significa «guarida de lobos»: Zarco encontró aquí una colonia de <b>lobos marinos</b> (focas monje).
+    Pueblo de pescadores del espada y cuna de la <b class="k">poncha</b>, el brebaje de aguardiente, miel y limón de
+    los marineros. En 1950, <b>Winston Churchill</b> plantó su caballete frente a sus barcas de colores: «uno de los
+    rincones más bonitos del mundo», dijo.</p>
+  </div>
+  <div class="hist">
+    <span class="tie">📍 Cabo Girão</span>
+    <h4>El cabo donde Zarco dio media vuelta</h4>
+    <p>En su primera exploración, Zarco navegó hasta aquí y <b>giró</b> de vuelta — de ahí <i>Girão</i>. Con sus
+    580 m es <b class="k">uno de los acantilados marinos más altos del mundo</b>. Abajo veréis las <b>fajãs</b>:
+    minúsculas plataformas de tierra fértil al pie del precipicio que los campesinos cultivaban bajando por el mar,
+    y a las que hoy se llega en teleférico.</p>
+  </div>
+  <div class="hist">
+    <span class="tie">📍 Calheta</span>
+    <h4>La tierra de la caña y la playa que vino de fuera</h4>
+    <p>El oeste fue corazón del azúcar: en Calheta aún funciona un <b>engenho</b> que destila ron y hace el <i>bolo
+    de mel</i> (pastel de miel de caña). Su <b class="k">playa de arena dorada</b> es, en realidad, artificial: se
+    creó en 2004 con arena traída del Sáhara, porque Madeira, volcánica, casi no tiene arena propia.</p>
+  </div>
+  <div class="hist">
+    <span class="tie">📍 Porto Moniz &amp; Seixal</span>
+    <h4>Donde la lava se baña en el Atlántico</h4>
+    <p>El extremo noroeste fue durante siglos <b>el rincón más aislado</b> de la isla. Sus famosas <b class="k">
+    piscinas naturales</b> no son obra del hombre: las talló la <b>lava</b> al encontrarse con el mar, formando
+    pozas de roca negra que la marea rellena de agua limpia. En Seixal, las viñas crecen casi colgadas del
+    acantilado sobre arena negra.</p>
+  </div>
+  <div class="hist">
+    <span class="tie">📍 Fanal &amp; Encumeada</span>
+    <h4>El bosque encantado y la espina dorsal de la isla</h4>
+    <p>En la meseta de <b>Paúl da Serra</b>, los <b class="k">til centenarios</b> de Fanal —algunos con más de 500
+    años— se retuercen entre la niebla como criaturas de cuento: es la Laurissilva en su forma más mágica. Bajaréis
+    por la <b>Encumeada</b>, el paso de montaña que parte la isla en dos y une las costas norte y sur: durante siglos,
+    el único cordón umbilical entre ambos mundos de Madeira.</p>
+  </div>
+
+  <!-- GASTRO -->
+  <h2 class="sec"><span class="ic">🍽️</span> Para comer y beber</h2>
+  <div class="grid2">
+    <div class="food"><h4>Espada com banana</h4><p>Pez espada negro con plátano frito, el plato icónico. Pruébalo en Calheta o Câmara de Lobos.</p></div>
+    <div class="food"><h4>Espetada en palo de laurel</h4><p>Ternera a la brasa ensartada en una vara de laurel. Originaria de Câmara de Lobos.</p></div>
+    <div class="food"><h4>Bolo do caco + mantequilla de ajo</h4><p>El pan madeirense, redondo y caliente. Está en todas partes; pídelo siempre.</p></div>
+    <div class="food"><h4>Lapas a la plancha</h4><p>Con mantequilla de ajo y limón. Mejores en los puertos del este (Caniçal).</p></div>
+    <div class="food"><h4>Poncha à pescador</h4><p>Ron de caña, limón y miel. La de Câmara de Lobos es la de referencia. "Bebe al menos dos."</p></div>
+    <div class="food"><h4>Vino de Madeira</h4><p>En Blandy's: el Sercial (seco) de aperitivo, el Malvasia (dulce) de postre.</p></div>
+    <div class="food"><h4>Nikita</h4><p>Batido de piña con helado y cerveza/vino blanco. Refresco local de playa.</p></div>
+    <div class="food"><h4>Anona &amp; maracujá</h4><p>Frutas tropicales de la isla. Pruébalas en el Mercado dos Lavradores.</p></div>
+  </div>
+
+  <!-- NOTAS -->
+  <h2 class="sec"><span class="ic">📌</span> Notas prácticas</h2>
+  <div class="warn">🥾 <b>Reserva de rutas (NUEVO 2026):</b> desde enero las rutas oficiales de Madeira exigen
+    <b>reserva online previa</b> (gratuita; busca "<i>SIMplifica trilhos Madeira</i>"). En este plan afecta a la
+    <b>Vereda dos Balcões (PR11)</b> del martes: resérvala con antelación. En cambio, los <b>miradores en coche</b>
+    (Pico do Arieiro, Baía d'Abra) son gratis y sin reserva. Solo si os animáis a caminar la <b>PR1</b> (Arieiro→Ruivo)
+    hay además tasa (~4,50–10,50 €).</div>
+  <ul class="notes">
+    <li><b>Microclima:</b> este y sur = seco; norte y centro = nublado. El Arieiro, solo con cielo despejado (martes).</li>
+    <li><b>Golden hour:</b> los miradores valen 10× en la última hora de luz. Atardecer ~21:20 en junio.</li>
+    <li><b>Frío en altura:</b> en el Pico do Arieiro (1.818 m) hace frío y viento aunque en Funchal haga sol. Lleva una capa de abrigo.</li>
+    <li><b>Baño:</b> lleva <b>escarpines</b> para Porto Moniz, Seixal y playas de cantos; el agua en junio aún está fresca.</li>
+    <li><b>Carreteras sinuosas:</b> nada está a más de 1h, pero las curvas y túneles alargan los trayectos. Deja margen de noche.</li>
+    <li><b>Reservas y horarios:</b> O Informal no reserva (llega a las 18:00). Reserva la <b>cata de Blandy's</b> (hora fija) y confirma el horario del teleférico de Monte.</li>
+    <li><b>Coche:</b> aparcar en el centro de Funchal es lío — usa parkings (La Vie / Anadia). Devuélvelo con depósito lleno el jueves a las 13:00 (gasolinera junto al aeropuerto antes de entregarlo).</li>
+  </ul>
+
+  <!-- CHECKLIST -->
+  <h2 class="sec"><span class="ic">✅</span> Antes de salir (checklist)</h2>
+  <div class="check"><div class="box"></div><div>Confirmar <b>hora y dirección de los buggies</b> (mar 14:30 · Estr. de São Lourenço 100, Caniçal)</div></div>
+  <div class="check"><div class="box"></div><div>Reservar/confirmar <b>cata Blandy's</b> y horarios de <b>teleférico + carros de cesto</b></div></div>
+  <div class="check"><div class="box"></div><div>Comprobar webcam/parte del <b>Pico do Arieiro</b> el lunes noche; si amanece nublado el martes, dale la vuelta al día</div></div>
+  <div class="check"><div class="box"></div><div>Mochila: <b>escarpines, bañador, capa de abrigo (Arieiro), chubasquero, gorra, crema, calzado cómodo</b></div></div>
+  <div class="check"><div class="box"></div><div>Reservar online la <b>Vereda dos Balcões (PR11)</b> para el martes (plataforma de trilhos de Madeira, gratis)</div></div>
+  <div class="check"><div class="box"></div><div>Localizar <b>gasolinera junto al aeropuerto</b> para repostar antes de devolver el coche</div></div>
+
+  <footer>
+    Itinerario Madeira · 22–24 junio 2026 · hecho a medida ⛰️🌊<br>
+    Abre este archivo en el navegador. Para PDF: <b>Imprimir → Guardar como PDF</b>.
+  </footer>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+  var pts = [
+    ["H", 32.6450, -16.9300, "Funchal · hotel (base)", "cb"],
+    [1, 32.6478, -16.9067, "Mercado dos Lavradores", "c1"],
+    [2, 32.6470, -16.9100, "Blandy's Wine Lodge", "c1"],
+    [3, 32.6478, -16.9094, "Sé · Catedral", "c1"],
+    [4, 32.6485, -16.9020, "Teleférico a Monte", "c1"],
+    [5, 32.6680, -16.9030, "Monte Palace + Carros de Cesto", "c1"],
+    [6, 32.6470, -16.9050, "Rua de Santa Maria (zona vieja)", "c1"],
+    [7, 32.7357, -16.9285, "Pico do Arieiro (1.818 m)", "c2"],
+    [8, 32.7330, -16.8870, "Ribeiro Frio + Vereda dos Balcões", "c2"],
+    [9, 32.8000, -16.8830, "Santana (casas de colmo)", "c2"],
+    [10, 32.7770, -16.8270, "Porto da Cruz", "c2"],
+    [11, 32.7390, -16.7280, "Buggies · Caniçal (14:30)", "c2"],
+    [12, 32.7430, -16.7060, "Ponta de São Lourenço (mirador)", "c2"],
+    [13, 32.7370, -16.7350, "Caniçal · Frente ao Sol (cena)", "c2"],
+    [14, 32.6500, -16.9770, "Câmara de Lobos", "c3"],
+    [15, 32.6560, -16.9930, "Cabo Girão (skywalk)", "c3"],
+    [16, 32.6740, -17.0640, "Ribeira Brava", "c3"],
+    [17, 32.6810, -17.1010, "Ponta do Sol", "c3"],
+    [18, 32.7180, -17.1770, "Praia da Calheta", "c3"],
+    [19, 32.8660, -17.1670, "Porto Moniz (piscinas de lava)", "c3"],
+    [20, 32.8230, -17.1050, "Seixal", "c3"],
+    ["F", 32.7565, -17.1480, "Fanal · bosque de niebla (opcional)", "c3"],
+    ["E", 32.7490, -17.0150, "Miradouro da Encumeada (opcional)", "c3"],
+    ["A", 32.6979, -16.7745, "Aeropuerto da Madeira", "cb"]
+  ];
+  var colors = {c1:"#3d7ea6", c2:"#1f7a4d", c3:"#e0623d", cb:"#5d6f74"};
+  var map = L.map('map', {scrollWheelZoom:false});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom:19, attribution:'© OpenStreetMap'
+  }).addTo(map);
+  var group = [];
+  pts.forEach(function(p){
+    var icon = L.divIcon({
+      className:'', html:'<div class="marker-num" style="background:'+colors[p[4]]+'">'+p[0]+'</div>',
+      iconSize:[26,26], iconAnchor:[13,13]
+    });
+    var gmaps = 'https://www.google.com/maps/search/?api=1&query='+p[1]+','+p[2];
+    var m = L.marker([p[1],p[2]], {icon:icon}).addTo(map)
+      .bindPopup('<b>'+p[0]+' · '+p[3]+'</b><br><a href="'+gmaps+'" target="_blank">Abrir en Google Maps ↗</a>');
+    group.push(m);
+  });
+  map.fitBounds(L.featureGroup(group).getBounds().pad(0.12));
+</script>
+</body>
+</html>
