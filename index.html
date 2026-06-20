@@ -111,6 +111,22 @@
   .hist p{margin:0 0 8px; font-size:.94rem; color:var(--ink);}
   .hist p:last-child{margin-bottom:0;}
   .hist b.k{color:var(--coral);}
+  .aud{display:inline-block; margin-top:10px; font-size:.76rem; font-weight:700; cursor:pointer;
+    background:var(--ocean); color:#fff; border:none; border-radius:20px; padding:5px 14px; letter-spacing:.2px;}
+  .aud.on{background:var(--coral);}
+  .aud:hover{filter:brightness(1.08);}
+  .tl{margin:8px 0 14px 6px; border-left:3px solid var(--sun); padding-left:24px;}
+  .tl .ev{position:relative; padding:0 0 12px 0;}
+  .tl .ev::before{content:''; position:absolute; left:-30px; top:5px; width:12px; height:12px;
+    border-radius:50%; background:var(--coral); border:2px solid #fff; box-shadow:0 0 0 2px var(--sun);}
+  .tl .yr{font-weight:800; color:var(--ocean-dark); margin-right:6px;}
+  .tl .ev .tx{font-size:.93rem; color:var(--ink);}
+  ol.cur{margin:6px 0 0; padding-left:22px;}
+  ol.cur li{margin-bottom:9px; font-size:.94rem;}
+  ol.cur li b{color:var(--coral);}
+  .nowbox{background:#eaf6ef; border:1px solid #bfe3cd; border-left:5px solid var(--leaf);
+    border-radius:0 12px 12px 0; padding:14px 18px; margin:14px 0; font-size:.95rem;}
+  .nowbox b{color:var(--leaf);}
 
   ul.notes{list-style:none; padding:0; margin:0;}
   ul.notes li{background:var(--card); border:1px solid var(--line); border-radius:10px;
@@ -467,6 +483,9 @@
   <h2 class="sec"><span class="ic">📜</span> Madeira contada · vuestro guía historiador</h2>
   <p style="color:var(--muted); font-size:.93rem; margin-top:-4px;">Para que cada parada signifique algo. Leedlo
     la noche antes o en el coche: la isla cobra otra dimensión cuando sabéis lo que pisáis.</p>
+  <div class="nowbox">🔊 <b>Audioguía:</b> cada bloque de aquí abajo tiene un botón <b>«Escuchar»</b>. Tócalo y el
+    móvil te lo narra en voz alta (perfecto para oírlo en el coche mientras conducís hacia el sitio). Vuelve a tocarlo
+    para parar. <i>Funciona en el navegador del móvil sin instalar nada; sube el volumen.</i></div>
 
   <div class="intro-hist">
     <p class="dropcap">Madeira no existía para el mundo hasta hace seis siglos — pero después medio mundo pasó por
@@ -626,17 +645,187 @@
     el único cordón umbilical entre ambos mundos de Madeira.</p>
   </div>
 
+  <!-- CRONOLOGÍA -->
+  <h2 class="sec"><span class="ic">🕰️</span> Cronología de la isla de un vistazo</h2>
+  <div class="tl">
+    <div class="ev"><span class="yr">~7–5,6 millones de años</span><span class="tx">la isla emerge del Atlántico sobre un punto caliente volcánico; reposa sobre corteza oceánica de 140 millones de años.</span></div>
+    <div class="ev"><span class="yr">~6.500 años</span><span class="tx">última actividad volcánica (centro-oeste de la isla). Madeira está inactiva, pero es geológicamente joven.</span></div>
+    <div class="ev"><span class="yr">s. XIV</span><span class="tx">la isla ya aparece en portulanos italianos como «Isola di Legname» (isla de la madera).</span></div>
+    <div class="ev"><span class="yr">1418–1419</span><span class="tx">Zarco y Tristão Vaz Teixeira, capitanes del Infante Don Enrique, arriban primero a Porto Santo y luego a Madeira.</span></div>
+    <div class="ev"><span class="yr">1420</span><span class="tx">empieza la colonización; queman el bosque para abrir cultivos (la tradición dice que ardió casi 7 años).</span></div>
+    <div class="ev"><span class="yr">1 julio 1419</span><span class="tx">desembarco en la playa de Machico, que será la primera capital.</span></div>
+    <div class="ev"><span class="yr">finales s. XV</span><span class="tx">Madeira es el mayor productor de azúcar del mundo; el «oro blanco» hace rico a Funchal.</span></div>
+    <div class="ev"><span class="yr">1479</span><span class="tx">Cristóbal Colón se casa en Porto Santo con Filipa Moniz Perestrelo, hija de un capitán de la isla.</span></div>
+    <div class="ev"><span class="yr">1493–1514</span><span class="tx">se construye la Sé (catedral) por orden de D. Manuel I; en 1508 Funchal es elevada a ciudad.</span></div>
+    <div class="ev"><span class="yr">s. XVI</span><span class="tx">el azúcar barato de Brasil hunde los precios; la caña deja paso al viñedo y al vino de Madeira.</span></div>
+    <div class="ev"><span class="yr">1566</span><span class="tx">brutal saqueo de Funchal por corsarios franceses; después se levantan fortalezas como São Tiago (1614).</span></div>
+    <div class="ev"><span class="yr">4 julio 1776</span><span class="tx">los firmantes de la Declaración de Independencia de EE. UU. brindan con vino de Madeira.</span></div>
+    <div class="ev"><span class="yr">1815</span><span class="tx">el barco de Napoleón, rumbo a Santa Elena, fondea ante Funchal; recibe ~600 botellas de Madeira.</span></div>
+    <div class="ev"><span class="yr">1891</span><span class="tx">abre el Reid's Palace; nace el turismo de lujo (luego Sissi, Shaw, Churchill, Gregory Peck…).</span></div>
+    <div class="ev"><span class="yr">1922</span><span class="tx">Carlos I de Austria, último emperador, muere exiliado y pobre en Monte (beatificado en 2004).</span></div>
+    <div class="ev"><span class="yr">1981</span><span class="tx">cesa la caza de ballenas en Caniçal; la isla vira a la conservación de cetáceos.</span></div>
+    <div class="ev"><span class="yr">1976</span><span class="tx">Madeira se convierte en Región Autónoma de Portugal, con gobierno propio.</span></div>
+    <div class="ev"><span class="yr">1999</span><span class="tx">la Laurissilva es declarada Patrimonio de la Humanidad por la UNESCO.</span></div>
+    <div class="ev"><span class="yr">1985 · hoy</span><span class="tx">nace en Funchal Cristiano Ronaldo; en 2017 el aeropuerto pasa a llamarse CR7.</span></div>
+  </div>
+
+  <!-- NATURALEZA -->
+  <h2 class="sec"><span class="ic">🌋</span> Geología · la montaña que salió del mar</h2>
+  <div class="hist">
+    <h4>Una cima volcánica de 6 km de altura</h4>
+    <p>Lo que pisáis es solo la coronación de un <b class="k">volcán en escudo gigantesco</b> que se eleva unos
+    <b>6.000 m desde el fondo del Atlántico</b>. Madeira emergió hace entre 7 y 5,6 millones de años sobre un punto
+    caliente del manto; la roca que lo cubre casi todo es <b>basalto</b> alcalino oscuro (de ahí los muros negros,
+    los cantos y las playas oscuras). El techo de la isla es el <b>Pico Ruivo (1.862 m)</b>, tercer pico más alto de
+    Portugal; vuestro Pico do Arieiro (1.818 m) es el tercero de la isla.</p>
+    <p>Dos paisajes de la ruta son pura geología: las <b>piscinas naturales</b> de Porto Moniz y Seixal son cavidades
+    que la <b>lava labró al chocar con el mar</b> y que la marea rellena de agua limpia; y <b>Cabo Girão</b> (580 m)
+    es el <b class="k">acantilado marino más alto de Europa</b>, una pared basáltica esculpida por el oleaje.</p>
+  </div>
+
+  <h2 class="sec"><span class="ic">🌿</span> Flora · el bosque reliquia y la explosión de color</h2>
+  <div class="hist">
+    <span class="tie">🌳 Laurissilva</span>
+    <h4>Un bosque del Terciario que sobrevivió a las glaciaciones</h4>
+    <p>La <b class="k">Laurissilva</b> es un bosque de laurel subtropical, <b>Patrimonio de la Humanidad (UNESCO,
+    1999)</b>. Es una reliquia viva: este bosque cubría el sur de Europa hace millones de años y desapareció con las
+    glaciaciones; Madeira conserva <b>la mayor superficie del mundo</b> (~15.000 ha, el 90% original). Lo cruzáis en
+    los Balcões y en Fanal.</p>
+    <p>Árboles endémicos (familia del laurel): el <b>til</b> (<i>Ocotea foetens</i>) —los gigantes retorcidos de
+    Fanal, algunos de 500+ años—, el <b>vinhático</b> (<i>Persea indica</i>, la «caoba de Madeira»), el barbusano,
+    el loureiro y el pau-branco.</p>
+  </div>
+  <div class="hist">
+    <span class="tie">🌺 Plantas emblemáticas</span>
+    <h4>El orgullo azul de Madeira y los gigantes</h4>
+    <p>El símbolo floral es el <b class="k">massaroco o «Pride of Madeira»</b> (<i>Echium candicans</i>): espigas
+    cónicas de flores azul-violeta que tapizan laderas en primavera. La isla tiene además el <b>geranio más grande
+    del mundo</b> (<i>Geranium maderense</i>, hasta 1,5 m), el arcaico <b>drago</b> (<i>Dracaena draco</i>, de savia
+    roja, «sangre de drago») y orquídeas endémicas. Y lo introducido que define el paisaje: los <b>jacarandás</b>
+    que tiñen Funchal de violeta en mayo, las <b>plataneras</b>, la caña de azúcar y la viña en bancales (<i>poios</i>).</p>
+  </div>
+
+  <h2 class="sec"><span class="ic">🦅</span> Fauna · rarezas atlánticas y un mar de cetáceos</h2>
+  <div class="hist">
+    <span class="tie">🐦 Aves</span>
+    <h4>Una de las aves más raras del mundo anida en estas cumbres</h4>
+    <p>La <b class="k">freira-da-madeira</b> o petrel de Zino (<i>Pterodroma madeira</i>) es una de las aves marinas
+    más raras de Europa (quizá &lt;200): se creyó extinta hasta 1969 y anida <b>solo en las cumbres altas</b> que
+    veis desde el Arieiro. Otras endémicas: el <b>bis-bis</b> (reyezuelo de Madeira, con cresta naranja), el
+    <b>pombo-trocaz</b> (paloma de la laurisilva) y el corre-caminhos.</p>
+  </div>
+  <div class="hist">
+    <span class="tie">🦭 Mar</span>
+    <h4>La foca monje que volvió de casi desaparecer</h4>
+    <p>En las <b>Islas Desertas</b> (que se ven desde São Lourenço) vive la <b class="k">foca monje</b>
+    (<i>Monachus monachus</i>), uno de los mamíferos más amenazados del planeta: pasó de <b>8 ejemplares en 1998 a
+    ~40</b> hoy, un éxito conservacionista. El mar de Madeira reúne <b>~26 especies de cetáceos</b> (un tercio de las
+    del mundo): cachalotes todo el año, calderones y delfines. Dato tranquilizador: <b>no hay serpientes ni fauna
+    terrestre peligrosa</b> — solo la simpática lagartija de Madeira.</p>
+  </div>
+
+  <h2 class="sec"><span class="ic">💧</span> Las Levadas · seis siglos de ingeniería del agua</h2>
+  <div class="hist">
+    <h4>2.000 km de canales picados a mano en la roca</h4>
+    <p>Las <b class="k">levadas</b> son canales de riego de poca pendiente que llevan el agua por gravedad. Hoy
+    suman <b>más de 2.000 km</b> (con 40 km de túneles) y sus senderos de servicio son las rutas más famosas de la
+    isla — vuestra Vereda dos Balcões es una de ellas. Nacieron con los primeros colonos del siglo XV, que trajeron
+    del norte de Portugal el saber del regadío, y fueron clave para la era del azúcar.</p>
+    <p>Resuelven el gran desequilibrio de Madeira: <b>trasvasar el agua del norte lluvioso al sur seco y poblado</b>.
+    Su construcción fue heroica y mortífera: los obreros se <b>descolgaban con cuerdas por paredes de 500 m</b> para
+    picar el canal en el basalto. Están en la lista indicativa de Patrimonio de la Humanidad.</p>
+  </div>
+
+  <!-- CLIMA -->
+  <h2 class="sec"><span class="ic">⛅</span> Climatología · por qué dos islas en una</h2>
+  <div class="hist">
+    <h4>La «isla de la eterna primavera»</h4>
+    <p>Madeira tiene un clima <b>subtropical oceánico</b> excepcionalmente suave: en Funchal la media anual es de
+    <b>~19 °C</b>, con ~20 °C de día en invierno y ~25 °C en verano. El mar ronda los <b>18–22 °C</b> (más cálido,
+    23–24 °C, de agosto a octubre; más fresco en primavera, por eso en junio aún «refresca»).</p>
+    <p><b class="k">El gran secreto: los microclimas.</b> Los <b>vientos alisios del nordeste</b> llegan cargados de
+    humedad y chocan con la cordillera central (&gt;1.800 m): el aire sube por la <b>vertiente norte</b>, se enfría y
+    descarga la lluvia → norte <b>verde, brumoso, exuberante</b>. Al pasar la cumbre, baja ya seco hacia el <b>sur</b>
+    (efecto föhn) → sur <b>seco, cálido y soleado</b>, donde está Funchal. Por eso vuestra regla de oro funciona:
+    <b>sur/este = sol; norte/centro = nubes</b>. Y por eso el Arieiro pide cielo despejado: la niebla de los alisios
+    tapa las cumbres en un minuto.</p>
+  </div>
+
+  <!-- FIESTAS -->
+  <h2 class="sec"><span class="ic">🎉</span> Fiestas y eventos · el calendario de la isla</h2>
+  <div class="hist">
+    <p><b>Febrero — Carnaval:</b> uno de los grandes; gran cortejo alegórico (sábado) y el satírico «Cortejo
+    Trapalhão» (martes). · <b>Abril/Mayo — Festa da Flor:</b> Funchal se vuelve un tapiz de flores; el «Muro de la
+    Esperanza» (cada niño pone una flor) y el gran desfile de carrozas florales.</p>
+    <p><b>Junio — Festival do Atlântico:</b> cada sábado, una compañía distinta compite en un <b class="k">concurso
+    internacional de fuegos artificiales</b> sobre la bahía, con música. · <b>~23–24 junio — São João:</b> hogueras y
+    fiestas de verano (¡justo en vuestras fechas!). · <b>15 agosto — Nossa Senhora do Monte:</b> la romería más
+    importante; muchos suben de rodillas.</p>
+    <p><b>Ago–Sep — Festa do Vinho:</b> vendimia y pisada tradicional de la uva en Estreito de Câmara de Lobos. ·
+    <b>31 diciembre — Fin de Año:</b> los fuegos de Funchal entraron en el <b class="k">Guinness (2006)</b> como el
+    mayor espectáculo pirotécnico del mundo; la «Noite do Mercado» (23 dic) llena el Mercado dos Lavradores de
+    villancicos y poncha hasta el alba.</p>
+  </div>
+
+  <!-- CULTURA -->
+  <h2 class="sec"><span class="ic">🎭</span> Cultura y tradiciones</h2>
+  <div class="hist">
+    <span class="tie">🧵 Artesanía</span>
+    <h4>El bordado, el mimbre y el traje de la carapuça</h4>
+    <p>El <b class="k">bordado da Madeira</b> saltó a industria a mediados del s. XIX gracias a la británica Bella
+    Phelps, que abrió una escuela en 1854 y lo vendió en los salones de la Inglaterra victoriana cuando la filoxera
+    arruinó la viña. La <b>cestería de mimbre (vimes)</b> es de Camacha, donde los mimbres se hierven antes de
+    trenzarse — de ahí salen los carros de cesto. El traje regional luce la <b>carapuça</b>, un gorro azul rematado
+    por un curioso «pincho» rígido hacia arriba.</p>
+  </div>
+  <div class="hist">
+    <span class="tie">🥃 La poncha</span>
+    <h4>El rito del mexelote</h4>
+    <p>La <b>poncha</b> —aguardiente de caña, miel de caña y limón— se maja y bate con un palo de madera llamado
+    <b class="k">mexelote</b> (popularmente, <i>caralhinho</i>) hasta integrarla. La clásica es la «à pescador», la
+    que tomaban los marineros para entrar en calor; hoy hay versiones con maracuyá. Su cuna es Câmara de Lobos.</p>
+  </div>
+
+  <!-- CURIOSIDADES -->
+  <h2 class="sec"><span class="ic">⭐</span> 20 curiosidades para presumir en la cena</h2>
+  <ol class="cur">
+    <li><b>Madeira = «madera»</b>: la isla estaba tan cubierta de bosque que la bautizaron así sin más; <b>Funchal</b> viene de <i>funcho</i>, el hinojo que crecía en su bahía.</li>
+    <li>No es un volcán extinto, sino <b>latente</b>: su última erupción fue hace solo ~6.500 años.</li>
+    <li>El incendio fundacional para abrir cultivos, según las crónicas, <b>ardió casi 7 años</b>.</li>
+    <li>A finales del s. XV, Madeira era <b>el mayor productor de azúcar del mundo</b>; el azúcar era tan caro que se usaba casi como moneda.</li>
+    <li>El <b>arte flamenco</b> de sus iglesias se pagó literalmente con azúcar exportado a Flandes.</li>
+    <li><b>Cristóbal Colón</b> vivió aquí y se casó en Porto Santo (1479) con la hija de un capitán de la isla.</li>
+    <li>El vino de Madeira <b>mejora con el calor y el vaivén del barco</b>: por eso lo «cuecen» (estufagem/canteiro) y es casi inmortal.</li>
+    <li>Los firmantes de la <b>independencia de EE. UU. brindaron con Madeira</b> el 4 de julio de 1776 (idea de Jefferson).</li>
+    <li>Según Shakespeare, al <b>Duque de Clarence lo ahogaron en una cuba de Malvasía</b> (Malmsey) en 1478.</li>
+    <li>La <b>alianza anglo-portuguesa (1373)</b> es la alianza diplomática vigente <b>más antigua del mundo</b>.</li>
+    <li>Hasta 1770, a los <b>no católicos se les enterraba en el mar</b>; los británicos lograron su cementerio en 1772.</li>
+    <li><b>Napoleón</b>, camino del destierro, no desembarcó por mareo, pero recibió <b>~600 botellas de Madeira</b>.</li>
+    <li><b>George Bernard Shaw aprendió a bailar tango</b> en el Reid's Palace (1924).</li>
+    <li><b>Churchill</b> pintó Câmara de Lobos en enero de 1950 y lanzó al pueblo a la fama.</li>
+    <li>El último <b>emperador de Austria-Hungría</b> murió pobre y exiliado en Monte (1922) y está enterrado allí.</li>
+    <li>El <b>techo de la catedral</b> es de cedro nativo, mudéjar, con más de 1.500 m²: de los mayores de Europa.</li>
+    <li>Las <b>casas de Santana</b> necesitan paja: por eso siembran trigo y centeno solo para poder techarlas.</li>
+    <li>En Caniçal se rodó parte de <b>Moby Dick (1956)</b>; el museo guarda el arpón original de la película.</li>
+    <li>La <b>foca monje</b> de las Desertas pasó de 8 a ~40 ejemplares: uno de los grandes rescates de Europa.</li>
+    <li>El <b>aeropuerto de Cristiano Ronaldo</b> está en parte construido <b>sobre pilares en el mar</b> y es de los más difíciles de aterrizar.</li>
+  </ol>
+
   <!-- GASTRO -->
   <h2 class="sec"><span class="ic">🍽️</span> Para comer y beber</h2>
   <div class="grid2">
-    <div class="food"><h4>Espada com banana</h4><p>Pez espada negro con plátano frito, el plato icónico. Pruébalo en Calheta o Câmara de Lobos.</p></div>
-    <div class="food"><h4>Espetada en palo de laurel</h4><p>Ternera a la brasa ensartada en una vara de laurel. Originaria de Câmara de Lobos.</p></div>
-    <div class="food"><h4>Bolo do caco + mantequilla de ajo</h4><p>El pan madeirense, redondo y caliente. Está en todas partes; pídelo siempre.</p></div>
-    <div class="food"><h4>Lapas a la plancha</h4><p>Con mantequilla de ajo y limón. Mejores en los puertos del este (Caniçal).</p></div>
-    <div class="food"><h4>Poncha à pescador</h4><p>Ron de caña, limón y miel. La de Câmara de Lobos es la de referencia. "Bebe al menos dos."</p></div>
-    <div class="food"><h4>Vino de Madeira</h4><p>En Blandy's: el Sercial (seco) de aperitivo, el Malvasia (dulce) de postre.</p></div>
-    <div class="food"><h4>Nikita</h4><p>Batido de piña con helado y cerveza/vino blanco. Refresco local de playa.</p></div>
-    <div class="food"><h4>Anona &amp; maracujá</h4><p>Frutas tropicales de la isla. Pruébalas en el Mercado dos Lavradores.</p></div>
+    <div class="food"><h4>Espetada em pau de loureiro</h4><p>El plato estrella: dados de ternera con ajo, sal y laurel ensartados en una vara de laurel (que la aromatiza) y asados a la brasa. Con milho frito y bolo do caco.</p></div>
+    <div class="food"><h4>Bolo do caco + manteiga de alho</h4><p>Pan plano redondo, antes cocido sobre una losa de piedra (<i>caco</i>) caliente, servido tibio con mantequilla de ajo y perejil. Acompaña casi todo.</p></div>
+    <div class="food"><h4>Espada com banana</h4><p>El sable negro (pez de aguas profundas, carne blanca suave) rebozado con plátano frito. El contraste salado-dulce más madeirense.</p></div>
+    <div class="food"><h4>Lapas grelhadas</h4><p>Lapas asadas en su concha con ajo, mantequilla y limón. La tapa marina por excelencia; mejores en los puertos del este (Caniçal).</p></div>
+    <div class="food"><h4>Bife de atum com milho frito</h4><p>Filete de atún a la plancha con orégano, y dados de polenta de maíz fritos, crujientes por fuera. Madeira es tierra atunera.</p></div>
+    <div class="food"><h4>Picado</h4><p>Para compartir: ternera salteada con ajo y guindilla, cubierta de patatas fritas y huevo, en bandeja común para picar entre todos.</p></div>
+    <div class="food"><h4>Bolo de mel</h4><p>El dulce icónico: no lleva miel de abeja sino <b>miel de caña</b>, con especias y frutos secos. Se parte con las manos, nunca con cuchillo.</p></div>
+    <div class="food"><h4>Vino de Madeira</h4><p>Fortificado y longevo. De seco a dulce: <b>Sercial</b> (aperitivo), Verdelho, Boal y <b>Malvasia/Malmsey</b> (postre). En Blandy's.</p></div>
+    <div class="food"><h4>Poncha</h4><p>Aguardiente de caña, miel y limón, batida con el <i>mexelote</i>. La «à pescador» es la clásica; hay con maracuyá. Cuna: Câmara de Lobos.</p></div>
+    <div class="food"><h4>Nikita</h4><p>Inventada en Madeira en 1985: helado de piña, cerveza y vino blanco. Refresco de playa; hay versión sin alcohol.</p></div>
+    <div class="food"><h4>Brisa Maracujá</h4><p>Refresco icónico de 1970: el primer refresco del mundo con zumo puro de maracuyá. Toda una institución local.</p></div>
+    <div class="food"><h4>Cerveja Coral &amp; frutas</h4><p>La lager local (cervecera de 1872), suave y dorada. Y probad las frutas: anona (chirimoya), maracujá, pitanga y la banana da Madeira, pequeña y dulce.</p></div>
   </div>
 
   <!-- NOTAS -->
@@ -718,6 +907,59 @@
     group.push(m);
   });
   map.fitBounds(L.featureGroup(group).getBounds().pad(0.12));
+</script>
+
+<script>
+/* ===== Audioguía: text-to-speech del navegador (gratis, también en móvil) ===== */
+(function(){
+  var synth = window.speechSynthesis;
+  if(!synth){ return; } // navegador sin soporte: no añadimos botones
+  var current = null; // botón que está sonando
+
+  function pickVoice(){
+    var vs = synth.getVoices() || [];
+    return vs.find(function(v){return /es[-_]ES/i.test(v.lang);})
+        || vs.find(function(v){return /^es/i.test(v.lang);})
+        || vs.find(function(v){return /pt[-_]PT/i.test(v.lang);})
+        || null;
+  }
+
+  function stop(){
+    synth.cancel();
+    if(current){ current.textContent='🔊 Escuchar'; current.classList.remove('on'); current=null; }
+  }
+
+  function speak(btn, text){
+    if(current === btn){ stop(); return; } // segundo clic = parar
+    stop();
+    var u = new SpeechSynthesisUtterance(text);
+    var v = pickVoice(); if(v){ u.voice=v; u.lang=v.lang; } else { u.lang='es-ES'; }
+    u.rate=0.98; u.pitch=1;
+    u.onend = function(){ if(current===btn){ btn.textContent='🔊 Escuchar'; btn.classList.remove('on'); current=null; } };
+    current=btn; btn.textContent='⏹ Parar'; btn.classList.add('on');
+    synth.speak(u);
+  }
+
+  // Inyecta un botón en cada bloque con texto narrable
+  var blocks = document.querySelectorAll('.hist, .intro-hist');
+  blocks.forEach(function(b){
+    // texto: título (h4) + párrafos, limpio
+    var parts=[];
+    var h=b.querySelector('h4'); if(h){ parts.push(h.textContent); }
+    b.querySelectorAll('p').forEach(function(p){ parts.push(p.textContent); });
+    var text = parts.join('. ').replace(/\s+/g,' ').trim();
+    if(!text){ return; }
+    var btn=document.createElement('button');
+    btn.className='aud'; btn.type='button'; btn.textContent='🔊 Escuchar';
+    btn.addEventListener('click', function(){ speak(btn, text); });
+    b.appendChild(btn);
+  });
+
+  // Algunas voces cargan tarde
+  if(synth.onvoiceschanged !== undefined){ synth.onvoiceschanged = pickVoice; }
+  // Parar el audio si el usuario cambia de pestaña
+  document.addEventListener('visibilitychange', function(){ if(document.hidden){ stop(); } });
+})();
 </script>
 </body>
 </html>
